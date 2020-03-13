@@ -1,20 +1,30 @@
 // Use D3 fetch to read the JSON file
 // The data from the JSON file is arbitrarily named importedData as the argument
 var Data = " "
+
 d3.json("data/samples.json").then((importedData) => {
+
   Data = importedData;
+
   init();
+
 });
 
 
 function init() {
+
   // Add dropdown menu options from imported data
   var names = Data["names"].map(row => row);
+
   names.forEach((data) => {
+
     var drop = d3.select("#selDataset").append("option");
+
     // Append text and value
     drop.text(data);
+
     drop.property("value", data);
+
   });
 
   // var samples = Data.samples.map(row => row)[0];
@@ -31,8 +41,11 @@ function init() {
   // };
 
   plotbarh(0); // Add barchart
+
   plotbubble(0); // Add bubblechart
+
   showmetadata(0) //Show metadata
+
 };
 
 
@@ -41,21 +54,32 @@ d3.selectAll("#selDataset").on("change", optionChanged);
 
 // Function called by DOM changes
 function optionChanged() {
+
   var dropdownMenu = d3.select("#selDataset");
+
   // Assign the value of the dropdown menu option to a variable
   var dataset = dropdownMenu.property("value");
   
   var name = Data.names;
+
   var data = name.filter((i) => i === dataset)[0];
+
   if (data) {
+
     var n = name.indexOf(data);
+
     console.log(data);
+
     console.log(n);
+
     plotbarh(n); // Add barchart
+
     plotbubble(n); // Add bubblechart
+
     showmetadata(n) //Show metadata
+    
   }
-  
+
   else {
 
     init();
