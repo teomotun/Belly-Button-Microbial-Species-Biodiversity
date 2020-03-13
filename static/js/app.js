@@ -112,13 +112,14 @@ function plotbubble(n) {
   var data = [trace2];
 
   var layout = {
-    xaxis: { title: "OTU ID" },
+    xaxis: { title: sample.id+" OTU ID" },
   };
 
   Plotly.newPlot('bubble', data, layout);
 };
 
 function showmetadata(n) {
+  d3.select("#sample-metadata").text("")
   var metadata = Data["metadata"].map(row => row)[n];
   Object.entries(metadata).forEach(([key, value]) => {
     var meta = d3.select("#sample-metadata");
