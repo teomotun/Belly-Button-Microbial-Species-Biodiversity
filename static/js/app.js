@@ -36,7 +36,7 @@ function init() {
   top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
 
   plotbarh();
-  plotbubble();
+  plotbubble(samples);
 };
 
 
@@ -58,29 +58,26 @@ function plotbarh() {
   Plotly.newPlot("bar", chartData);
 };
 
-function plotbubble() {
+function plotbubble(sample) {
   // Trace2 for to display bubble chart
   var trace2 = {
-    y: samples.sample_values,
-    x: samples.otu_ids,
-    text: samples.otu_labels,
+    y: sample.sample_values,
+    x: sample.otu_ids,
+    text: sample.otu_labels,
     mode: 'markers',
     marker: {
-      color: samples.otu_ids,
-      size: samples.sample_values
+      color: sample.otu_ids,
+      size: sample.sample_values
     }
   };
 
   var data = [trace2];
 
-  // var layout = {
-  //   title: 'Marker Size',
-  //   showlegend: false,
-  //   height: 600,
-  //   width: 600
-  // };
+  var layout = {
+    xaxis: { title: "OTU ID" },
+  };
 
-  Plotly.newPlot('bubble', data);
+  Plotly.newPlot('bubble', data, layout);
 
 };
 
