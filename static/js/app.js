@@ -44,30 +44,16 @@ function optionChanged() {
   var dropdownMenu = d3.select("#selDataset");
   // Assign the value of the dropdown menu option to a variable
   var dataset = dropdownMenu.property("value");
-  // Initialize an empty array for the query data
-  var data = [];
-
-  // if (dataset == 'dataset1') {
-  //   data = us;
-  // }
-  // else if (dataset == 'dataset2') {
-  //   data = uk;
-  // }
-  // else if (dataset == 'dataset3') {
-  //   data = canada;
-  // }
-
-
-  var name = Data["names"];
-  for (var i = 0; i < name.length; i++) {
-    if (name[i] == dataset) {
-      var n = i;
-      showmetadata(0) //Show metadata
-    }
-    else {
-      init()
-    }
-
+  
+  var name = Data.names;
+  var data = name.filter((i) => i === dataset)[0];
+  if (data) {
+    var n = name.indexOf(data);
+    console.log(data);
+    console.log(n);
+  }
+  else {
+    init();
   };
 
   //   updatePlotly(data);
