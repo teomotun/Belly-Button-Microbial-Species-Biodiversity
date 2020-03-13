@@ -17,7 +17,7 @@ function init() {
     drop.property("value", data);
   });
 
-  var samples = Data.samples.map(row => row)[0];
+  // var samples = Data.samples.map(row => row)[0];
 
   // Sorting algorithm, data is already sorted so not needed
   // samples.sample_values.sort(function (a, b) {
@@ -30,13 +30,8 @@ function init() {
   //   sampless.push(sample.otu_ids[n]);
   // };
 
-  // Slice the first 10 objects for plotting & reverse the array due to Plotly's defaults
-  top_OTU_value = samples.sample_values.slice(0, 10).reverse();
-  top_OTU = samples.otu_ids.slice(0, 10).reverse();
-  top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
-
-  plotbarh(); // Add barchart
-  plotbubble(samples); // Add bubblechart
+  plotbarh(0); // Add barchart
+  plotbubble(samples,0); // Add bubblechart
   showmetadata(0) //Show metadata
 };
 
@@ -109,7 +104,13 @@ function optionChanged() {
 
 
 
-function plotbarh() {
+function plotbarh(n) {
+  var samples = Data.samples.map(row => row)[n];
+  // Slice the first 10 objects for plotting & reverse the array due to Plotly's defaults
+  top_OTU_value = samples.sample_values.slice(0, 10).reverse();
+  top_OTU = samples.otu_ids.slice(0, 10).reverse();
+  top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
+  
   // Trace1 for to display bar chart
   var trace1 = {
     x: top_OTU_value,
@@ -126,7 +127,8 @@ function plotbarh() {
   Plotly.newPlot("bar", chartData);
 };
 
-function plotbubble(sample) {
+function plotbubble(sample,n) {
+  var samples = Data.samples.map(row => row)[n];
   // Trace2 for to display bubble chart
   var trace2 = {
     y: sample.sample_values,
