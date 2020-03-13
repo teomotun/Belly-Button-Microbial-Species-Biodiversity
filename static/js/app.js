@@ -35,8 +35,17 @@ function init() {
   top_OTU = samples.otu_ids.slice(0, 10).reverse();
   top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
 
-  plotbarh();
-  plotbubble(samples);
+  plotbarh(); // Add barchart
+  plotbubble(samples); // Add bubblechart
+
+
+  var metadata = Data["metadata"].map(row => row)[0];
+  Object.entries(metadata).forEach(([key, value]) => {
+    var meta = d3.select("#sample-metadata");
+    var cell = meta.append("p");
+    cell.text(key+": "+value);
+  });
+
 };
 
 
