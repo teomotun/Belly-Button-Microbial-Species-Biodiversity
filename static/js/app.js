@@ -31,7 +31,7 @@ function init() {
   // };
 
   plotbarh(0); // Add barchart
-  plotbubble(samples,0); // Add bubblechart
+  plotbubble(0); // Add bubblechart
   showmetadata(0) //Show metadata
 };
 
@@ -69,32 +69,11 @@ function optionChanged() {
       init()
     }
   };
+
+  //   updatePlotly(data);
+
 };
-  // switch (dataset) {
-  //   case "dataset1":
-  //     x = [1, 2, 3, 4, 5];
-  //     y = [1, 2, 4, 8, 16];
-  //     break;
-
-  //   case "dataset2":
-  //     x = [10, 20, 30, 40, 50];
-  //     y = [1, 10, 100, 1000, 10000];
-  //     break;
-
-  //   case "dataset3":
-  //     x = [100, 200, 300, 400, 500];
-  //     y = [10, 100, 50, 10, 0];
-  //     break;
-
-  //   default:
-  //     x = [1, 2, 3, 4, 5];
-  //     y = [1, 2, 3, 4, 5];
-  //     break;
-
-
-//   // Call function to update the chart
-//   updatePlotly(data);
-// }
+  
 
 // // Update the restyled plot's values
 // function updatePlotly(newdata) {
@@ -127,8 +106,8 @@ function plotbarh(n) {
   Plotly.newPlot("bar", chartData);
 };
 
-function plotbubble(sample,n) {
-  var samples = Data.samples.map(row => row)[n];
+function plotbubble(n) {
+  var sample = Data.samples.map(row => row)[n];
   // Trace2 for to display bubble chart
   var trace2 = {
     y: sample.sample_values,
