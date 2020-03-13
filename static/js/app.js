@@ -64,13 +64,16 @@ function optionChanged() {
 
 
   var name = Data["names"];
-  // for (var i = 0; i < name.length; i++) {
-  //   if (name[i] == dataset) {
-  //     console.log(name[i]);
-  //     var n = i;
-  //   };
-  // };
-  console.log(name)
+  for (var i = 0; i < name.length; i++) {
+    if (name[i] == dataset) {
+      var n = i;
+      console.log(n);
+      console.log(name[i]);
+    }
+    else {
+      init()
+    }
+  };
 };
   // switch (dataset) {
   //   case "dataset1":
