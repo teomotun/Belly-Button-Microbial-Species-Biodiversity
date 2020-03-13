@@ -51,6 +51,9 @@ function optionChanged() {
     var n = name.indexOf(data);
     console.log(data);
     console.log(n);
+    plotbarh(n); // Add barchart
+    plotbubble(n); // Add bubblechart
+    showmetadata(n) //Show metadata
   }
   else {
     init();
