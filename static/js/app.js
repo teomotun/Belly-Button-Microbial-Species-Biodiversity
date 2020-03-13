@@ -37,16 +37,39 @@ function init() {
 
   plotbarh(); // Add barchart
   plotbubble(samples); // Add bubblechart
-
-
-  var metadata = Data["metadata"].map(row => row)[0];
-  Object.entries(metadata).forEach(([key, value]) => {
-    var meta = d3.select("#sample-metadata");
-    var cell = meta.append("p");
-    cell.text(key+": "+value);
-  });
-
+  showmetadata(0) //Show metadata
 };
+
+
+// On change to the DOM, call getData()
+d3.selectAll("#selDataset").on("change", optionChanged);
+
+// Function called by DOM changes
+function optionChanged() {
+  var dropdownMenu = d3.select("#selDataset");
+  // Assign the value of the dropdown menu option to a variable
+  var dataset = dropdownMenu.property("value");
+  // Initialize an empty array for the country's data
+  var data = [];
+
+  if (dataset == 'dataset1') {
+    data = us;
+  }
+  else if (dataset == 'dataset2') {
+    data = uk;
+  }
+  else if (dataset == 'dataset3') {
+    data = canada;
+  }
+  // Call function to update the chart
+  updatePlotly(data);
+}
+
+// Update the restyled plot's values
+function updatePlotly(newdata) {
+  Plotly.restyle("pie", "values", [newdata]);
+}
+
 
 
 
@@ -87,8 +110,19 @@ function plotbubble(sample) {
   };
 
   Plotly.newPlot('bubble', data, layout);
+};
+
+function showmetadata(n) {
+  var metadata = Data["metadata"].map(row => row)[n];
+  Object.entries(metadata).forEach(([key, value]) => {
+    var meta = d3.select("#sample-metadata");
+    var cell = meta.append("p");
+    cell.text(key + ": " + value);
+  });
 
 };
+
+
 
 
 
