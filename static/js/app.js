@@ -62,12 +62,12 @@ function optionChanged() {
   for (var i = 0; i < name.length; i++) {
     if (name[i] == dataset) {
       var n = i;
-      console.log(n);
-      console.log(name[i]);
+      showmetadata(0) //Show metadata
     }
     else {
       init()
     }
+
   };
 
   //   updatePlotly(data);
