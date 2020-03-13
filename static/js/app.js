@@ -17,20 +17,73 @@ function init() {
     drop.property("value", data);
   });
 
-  var unique_id = Data.samples.map(row => row[0]);
-  console.log(unique_id);
+  var samples = Data.samples.map(row => row)[0];
 
-  // unique_id.sample_values.sort(function (a, b) {
+  // Sorting algorithm, data is already sorted so not needed
+  // samples.sample_values.sort(function (a, b) {
   //   return parseFloat(b) - parseFloat(a);
   // });
+  // var sample = Data.samples.map(row => row)[0];
+  // var sampless = [];
+  // for (var i = 0; i < sample_values.length; i++) {
+  //   var n = sample.sample_values.indexOf(sample_values[i]);
+  //   sampless.push(sample.otu_ids[n]);
+  // };
 
-  console.log(unique_id.sample_values);
+  // Slice the first 10 objects for plotting & reverse the array due to Plotly's defaults
+  top_OTU_value = samples.sample_values.slice(0, 10).reverse();
+  top_OTU = samples.otu_ids.slice(0, 10).reverse();
+  top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
+
+  plotbarh();
+  plotbubble();
+};
 
 
 
+function plotbarh() {
+  // Trace1 for to display bar chart
+  var trace1 = {
+    x: top_OTU_value,
+    y: top_OTU.map(row => "OTU " + row),
+    text: top_OTU_labels,
+    type: "bar",
+    orientation: "h"
+  };
 
+  // data
+  var chartData = [trace1];
+
+  // Render the plot to the div tag with id "plot"
+  Plotly.newPlot("bar", chartData);
+};
+
+function plotbubble() {
+  // Trace2 for to display bubble chart
+  var trace2 = {
+    y: samples.sample_values,
+    x: samples.otu_ids,
+    text: samples.otu_labels,
+    mode: 'markers',
+    marker: {
+      color: samples.otu_ids,
+      size: samples.sample_values
+    }
+  };
+
+  var data = [trace2];
+
+  // var layout = {
+  //   title: 'Marker Size',
+  //   showlegend: false,
+  //   height: 600,
+  //   width: 600
+  // };
+
+  Plotly.newPlot('bubble', data);
 
 };
+
 
 
 // var dropdownMenu = d3.select("#selDataset");
