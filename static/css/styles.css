@@ -26,11 +26,11 @@ h1 {
 }
 
 #sampleMetadata {
-    width = "auto|length|%|initial|inherit";
+    width: "auto|length|%|initial|inherit";
     font-weight: bold;
 }
 
-#pie {
+#bar {
     width: 100%;
     height: 100%;
     right: 50;
