@@ -27,9 +27,17 @@ function init() {
 
   });
 
+  plotbarh(0); // Add barchart
+
+  plotbubble(0); // Add bubblechart
+
+  showmetadata(0); //Show metadata
+
+  buildGauge(0); // Show gauge plot
+
   // var samples = Data.samples.map(row => row)[0];
 
-  // Sorting algorithm, data is already sorted so not needed
+  // Sorting algorithm, data is already sorted so it's not needed
   // samples.sample_values.sort(function (a, b) {
   //   return parseFloat(b) - parseFloat(a);
   // });
@@ -39,13 +47,7 @@ function init() {
   //   var n = sample.sample_values.indexOf(sample_values[i]);
   //   sampless.push(sample.otu_ids[n]);
   // };
-
-  plotbarh(0); // Add barchart
-
-  plotbubble(0); // Add bubblechart
-
-  showmetadata(0) //Show metadata
-
+  console.log(Data["metadata"].map(row => row)[0].wfreq);
 };
 
 
@@ -59,7 +61,7 @@ function optionChanged() {
 
   // Assign the value of the dropdown menu option to a variable
   var dataset = dropdownMenu.property("value");
-  
+
   var name = Data.names;
 
   var data = name.filter((i) => i === dataset)[0];
@@ -77,7 +79,9 @@ function optionChanged() {
     plotbubble(n); // Add bubblechart
 
     showmetadata(n) //Show metadata
-    
+
+    buildGauge(n) // Show gauge plot
+
   }
 
   else {
@@ -99,7 +103,7 @@ function plotbarh(n) {
   top_OTU = samples.otu_ids.slice(0, 10).reverse();
 
   top_OTU_labels = samples.otu_labels.slice(0, 10).reverse();
-  
+
   // Trace1 for to display bar chart
   var trace1 = {
 
@@ -152,7 +156,7 @@ function plotbubble(n) {
 
   var layout = {
 
-    xaxis: { title: sample.id+" OTU ID" },
+    xaxis: { title: sample.id + " OTU ID" },
 
   };
 
@@ -177,4 +181,94 @@ function showmetadata(n) {
 
   });
 
+};
+
+
+function buildGauge(n) {
+  // // Enter the index of the dataset with corresponding freq
+  var level = parseFloat(Data["metadata"].map(row => row)[n].wfreq) * 20;
+  // Trig to calc meter point
+  var degrees = 180 - level,
+    radius = .5;
+
+  var radians = degrees * Math.PI / 180;
+
+  var x = radius * Math.cos(radians);
+
+  var y = radius * Math.sin(radians);
+  // Path: may have to change to create a better triangle
+  var mainPath = 'M -.0 -0.05 L .0 0.05 L ',
+    pathX = String(x),
+    space = ' ',
+    pathY = String(y),
+    pathEnd = ' Z';
+  
+    var path = mainPath.concat(pathX, space, pathY, pathEnd);
+  
+  var data = [{
+    type: 'scatter',
+    x: [0], y: [0],
+    marker: { size: 12, color: '850000' },
+    showlegend: false,
+    name: 'Freq',
+    text: level,
+    hoverinfo: 'text+name'
+  },
+
+  {
+    values: [50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50],
+    rotation: 90,
+    text: ['8-9', '7-8', '6-7', '5-6', '4-5', '3-4', '2-3', '1-2', '0-1', ''],
+    textinfo: 'text',
+    textposition: 'inside',
+    
+    marker: {
+      colors: [
+        'rgba(0, 105, 11, .5)', 'rgba(10, 120, 22, .5)',
+        'rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+        'rgba(170, 202, 42, .5)', 'rgba(202, 209, 95, .5)',
+        'rgba(210, 206, 145, .5)', 'rgba(232, 226, 202, .5)',
+        'rgba(240, 230, 215, .5)', 'rgba(255, 255, 255, 0)'
+      ]
+    },
+
+    labels: ['8-9', '7-8', '6-7', '5-6', '4-5', '3-4', '2-3', '1-2', '0-1', ''],
+    
+    hoverinfo: 'label',
+    
+    hole: .5,
+    
+    type: 'pie',
+    
+    showlegend: false
+  }];
+  
+  var layout = {
+    shapes: [{
+      type: 'path',
+      path: path,
+      fillcolor: '850000',
+      line: {
+        color: '850000'
+      }
+    }],
+
+    title: '<b>Belly Button Washing Frequency</b> <br> Scrubs per Week',
+    height: 500,
+    width: 500,
+    
+    xaxis: {
+      zeroline: false, showticklabels: false,
+      showgrid: false, range: [-1, 1]
+    },
+
+    yaxis: {
+      zeroline: false, showticklabels: false,
+      showgrid: false, range: [-1, 1]
+    }
+
+  };
+
+  Plotly.newPlot('gauge', data, layout);
+  
 };
