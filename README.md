@@ -13,7 +13,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 2. Created a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 
-  ![bar Chart](Images/hw01.png)
+  ![bar Chart](Images/bar.png)
 
 3. Created a bubble chart that displays each sample.
 
@@ -25,7 +25,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 5. Displayed each key-value pair from the metadata JSON object in the page, i.e., an individual's demographic information.
 
-![hw](Images/hw03.png)
+![hw](Images/demographic.png)
 
 6. Updated all of the plots any time that a new sample is selected.
 
@@ -33,7 +33,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 The final app looked like this =>
 
-![hw](Images/hw02.png)
+![hw](Images/web_page.png)
 
 - - -
 ## Deployment
